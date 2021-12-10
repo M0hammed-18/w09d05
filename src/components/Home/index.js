@@ -4,6 +4,7 @@ import "./style.css"
 import { useNavigate } from "react-router-dom";
 import SingUp from "../SingUp";
 import Login from "../Login";
+import Nav from "../Nav";
 
 
 function Home() {
@@ -27,6 +28,8 @@ function Home() {
     //     </div>
     // </div>
     // </>
+    <>
+    <Nav/>
     
     <div className = "head-text">
       <div className = "head-image">
@@ -43,7 +46,7 @@ function Home() {
       
         </div>
     </div>
-
+    </>
   );
 }
 

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import "./style.css";
 import { FaRegGrinTongue } from "react-icons/fa";
 import {BsFillEmojiHeartEyesFill } from "react-icons/bs";
+import Nav from "../Nav";
 
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -33,6 +34,7 @@ const Register = () => {
 
   return (
     <>
+    <Nav/>
     <div className="singUpPage">
         <section className="sectionbox">
 

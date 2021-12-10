@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./style.css"
+import Nav from "../Nav";
 
 
 const Login = () => {
@@ -37,13 +38,15 @@ const Login = () => {
     // navigate("/");
   };
   return (
-    <div className="desing">
+    <>
+    <Nav/>
+    <div className="singUpPage">
      {!local?(
-       <div className="loginPage">
+       <div className="sectionbox">
 
       <section>
       <h5>Login please</h5>
-      <input
+      <input id="inputbox"
         type="email"
         name="email"
         placeholder="enter email "
@@ -51,7 +54,7 @@ const Login = () => {
           setEmail(e.target.value);
         }}
       />
-      <input
+      <input id="inputbox"
         type="password"
         name="password"
         placeholder="enter password "
@@ -67,6 +70,7 @@ const Login = () => {
 <h1></h1>
       )}
     </div>
+    </>
   );
 };
 
