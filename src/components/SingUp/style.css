@@ -23,3 +23,11 @@
     font-size: 2rem;
     color: darkgrey;
 }
+.message {
+    padding: 0.1rem 0.4rem;
+    background-color: rgb(255, 61, 61);
+    font-size: 110%;
+    color: white;
+    border-radius: 0.5rem;
+    margin: 0.5rem;
+  }

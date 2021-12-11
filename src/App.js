@@ -1,10 +1,10 @@
-import logo from "./logo.svg";
 import "./App.css";
-import { Link, Route, Router, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import Nav from "./components/Nav";
 import Login from "./components/Login";
 import SingUp from "./components/SingUp";
+import Post from "./components/Post";
 
 function App() {
   return (
@@ -15,6 +15,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="nav" element={<Nav />} />
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/post" element={<Post/>}/>
         </Routes>
       </div>
     </>

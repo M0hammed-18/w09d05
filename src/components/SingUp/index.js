@@ -2,9 +2,9 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
+import PasswordChecklist from "react-password-checklist";
 import "./style.css";
-import { FaRegGrinTongue } from "react-icons/fa";
-import {BsFillEmojiHeartEyesFill } from "react-icons/bs";
 import Nav from "../Nav";
 
 
@@ -15,10 +15,18 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username,setName]=useState('')
+  const [message, setMessage] = useState("");
+
+  const state = useSelector((state) => {
+    return {
+      token: state.signIn.token,
+    };
+  });
+  // eslint-disable-next-line
   const [role, setRole] = useState("61a7750f589f5a40c9c7848f");
 
   const newuser = async () => {
-    try {
+    setMessage("")
       const result = await axios.post(`${BASE_URL}/singup`, {
         username,
         email,
@@ -26,19 +34,48 @@ const Register = () => {
         role
       });
       console.log(result);
-      navigate("/login")
-    } catch (err) {
-      console.log(err);
-    }
+      if (result.status===201){
+        window.alert("")
+        navigate("/login")
+      } else{
+        setMessage(result.data.message)
+      }
+      
+      
   };
 
   return (
     <>
     <Nav/>
     <div className="singUpPage">
+      {state.token?(
         <section className="sectionbox">
-
-      <h3 id="h3text"> SingUp </h3>
+          <p>You already loggedin, you don't need to signup</p>
+          <button onClick={() => navigate("/")}>HOME</button>
+          ) : (
+      
+      <PasswordChecklist
+              rules={[
+                "minLength",
+                "specialChar",
+                "number",
+                "capital",
+                "lowercase",
+              ]}
+              minLength={6}
+              value={password}
+              onChange={(isValid) => {
+                if (isValid) {
+                  const button = document.querySelector("#signupSubmitButton");
+                  button.disabled = false;
+                } else {
+                  const button = document.querySelector("#signupSubmitButton");
+                  button.disabled = true;
+                }
+              }}
+            />
+            <h3 id="h3text"> SingUp </h3>
+            {message ? <div className="message">{message}</div> : ""}
       <input id="inputbox"
         type="text"
         name="name"
@@ -64,8 +101,12 @@ const Register = () => {
         }}
       />
       <button  id="buttonbox"onClick={newuser}>Regester </button>
+          
       </section>
+      // eslint-disable-next-line
+      ):(<h1></h1>)}
       </div>
+      
     </>
   );
 };

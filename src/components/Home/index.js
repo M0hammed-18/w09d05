@@ -1,9 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./style.css"
 import { useNavigate } from "react-router-dom";
-import SingUp from "../SingUp";
-import Login from "../Login";
 import Nav from "../Nav";
 
 
