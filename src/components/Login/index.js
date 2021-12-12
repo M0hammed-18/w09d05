@@ -18,11 +18,11 @@ const Login = () => {
   const [local, setLocal] = useState("");
   const [message, setMessage] = useState("");
 
-  const state = useSelector((state) => {
-    return {
-      token: state.Login.token,
-    };
-  });
+  // const state = useSelector((state) => {
+  //   return {
+  //     token: state.Login.token,
+  //   };
+  // });
 
   // useEffect(() => {
   //   const token = localStorage.getItem("token");
@@ -42,29 +42,30 @@ const Login = () => {
       navigate("/");
     } catch (err) {
       console.log(err, "what");
-      setMessage(error.response.data.message);
+      setMessage(err.response.data.message);
     }
 
     navigate("/post");
-    const googleLogin = () => {
-      popupTools.popup(
-        `http://localhost:5000/auth/google`,
-        "Google Login",
-        { width: 400, height: 600 },
-        function (err, user) {
-          if (err) {
-            console.log(err);
-          } else {
-            dispatch( login({
-                role: user.result.role,
-                token: user.token,
-              })
-            );
-            navigate("/");
-          }
-        }
-      );
-    }
+
+    // const googlelogin = () => {
+    //   popupTools.popup(
+    //     `http://localhost:4000/auth/google`,
+    //     "Google Login",
+    //     { width: 400, height: 600 },
+    //     function (err, user) {
+    //       if (err) {
+    //         console.log(err);
+    //       } else {
+    //         dispatch( login({
+    //             role: user.result.role,
+    //             token: user.token,
+    //           })
+    //         );
+    //         navigate("/");
+    //       }
+    //     }
+    //   );
+    // }
   };
   return (
     <>
@@ -72,8 +73,12 @@ const Login = () => {
       <div className="singUpPage">
         {!local ? (
           <div className="sectionbox">
+            <p>You already loggedin, you don't need to login</p>
+
+            <button onClick={() => navigate("/")}>home</button>
             <section>
               <h5>Login </h5>
+              {message ? <div className="message">{message}</div> : ""}
               <input
                 id="inputbox"
                 type="email"
@@ -92,6 +97,13 @@ const Login = () => {
                   setPassword(e.target.value);
                 }}
               />
+               {/* <button
+              type="button"
+              className="login-with-google-btn"
+              onClick={googlelogin}
+            >
+              Or Login with Google
+            </button> */}
               <button onClick={login}>Login</button>
             </section>
           </div>
