@@ -21,3 +21,4 @@
 | /post         | Post          |post page     |
 
 
+![UML Diagram ](https://github.com/M0hammed-18/w09d05/blob/main/digraim/UMLDiagram.png)
