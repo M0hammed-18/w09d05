@@ -29,7 +29,7 @@ const instialState = {
   
   export default signIn;
 
-  export const login = (data) => {
+  export const login1 = (data) => {
     return {
       type: "LOGIN",
       payload: data,

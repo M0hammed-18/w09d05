@@ -1,60 +1,60 @@
-import React from "react";
-import axios from "axios";
-import { useState } from "react";
-import { useNavigate } from "react-router";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import PasswordChecklist from "react-password-checklist";
+import axios from "axios";
 import "./style.css";
-import Nav from "../Nav";
+import Nav from "./../Nav"
 
-
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-const Register = () => {
-  
+const Signup = () => {
   const navigate = useNavigate();
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username,setName]=useState('')
   const [message, setMessage] = useState("");
-
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
   const state = useSelector((state) => {
     return {
       token: state.signIn.token,
     };
   });
-  // eslint-disable-next-line
-  const [role, setRole] = useState("61a7750f589f5a40c9c7848f");
 
-  const newuser = async () => {
-    setMessage("")
-      const result = await axios.post(`${BASE_URL}/singup`, {
-        username,
-        email,
-        password,
-        role
-      });
-      console.log(result);
-      if (result.status===201){
-        window.alert("")
-        navigate("/login")
-      } else{
-        setMessage(result.data.message)
-      }
-      
-      
+  const signup = async () => {
+    setMessage("");
+    const res = await axios.post(`${BASE_URL}/singup`, {
+      username: username,
+      email: email,
+      password: password,
+      role: process.env.REACT_APP_USER_ROLE,
+    });
+    if (res.status === 201) {
+      window.alert("you will receive a confirmation email")
+      navigate("/login");
+    } else {
+      setMessage(res.data.message);
+    }
   };
 
   return (
     <>
     <Nav/>
-    <div className="singUpPage">
-      {state.token?(
-        <section className="sectionbox">
-          <p>You already loggedin, you don't need to signup</p>
-          <button onClick={() => navigate("/")}>HOME</button>
-          ) : (
-      
-      <PasswordChecklist
+    <div className="signupWrapper">
+      {state.token ? (
+        <h1>
+          <div className="centerWrapper">
+            <div className="homeSignupTitle">
+              <p>You already loggedin, you don't need to signup</p>
+            </div>
+            <div className="homeSignupButtons">
+              <button onClick={() => navigate("/")}>HOME</button>
+            </div>
+          </div>
+        </h1>
+      ) : (
+        <main className="signupPanel">
+          
+          <div className="role">
+            <PasswordChecklist
               rules={[
                 "minLength",
                 "specialChar",
@@ -74,41 +74,51 @@ const Register = () => {
                 }
               }}
             />
-            <h3 id="h3text"> SingUp </h3>
+            <button id="loginButton" onClick={() => navigate("/login")}>
+              or go to login
+            </button>
+          </div>
+          <div className="signupPanel__half signupHalf--second">
+            <h2>Signup</h2>
             {message ? <div className="message">{message}</div> : ""}
-      <input id="inputbox"
-        type="text"
-        name="name"
-        placeholder="Enter Your Name "
-        onChange={(e) => {
-          setName(e.target.value);
-        }}
-      />
-      <input id="inputbox"
-        type="email"
-        name="email"
-        placeholder="Enter Your Email "
-        onChange={(e) => {
-          setEmail(e.target.value);
-        }}
-      />
-      <input id="inputbox"
-        type="password"
-        name="password"
-        placeholder="Enter Your Password "
-        onChange={(e) => {
-          setPassword(e.target.value);
-        }}
-      />
-      <button  id="buttonbox"onClick={newuser}>Regester </button>
-          
-      </section>
-      // eslint-disable-next-line
-      ):(<h1></h1>)}
-      </div>
-      
+            <form
+              className="signupInput"
+              onSubmit={(e) => {
+                e.preventDefault();
+                signup(e);
+              }}
+            >
+              <input
+                type="text"
+                placeholder="Username"
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+              <input
+                type="text"
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <input
+                id="signupSubmitButton"
+                type="submit"
+                value="Submit"
+                disabled
+              />
+            </form>
+          </div>
+        </main>
+      )}
+    </div>
     </>
   );
 };
 
-export default Register;
+export default Signup;

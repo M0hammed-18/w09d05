@@ -4,7 +4,7 @@ import Home from "./components/Home";
 import Nav from "./components/Nav";
 import Login from "./components/Login";
 import SingUp from "./components/SingUp";
-import Post from "./components/Post";
+import Posts from "./components/Posts";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="nav" element={<Nav />} />
           <Route exact path="/login" element={<Login />} />
-          <Route exact path="/post" element={<Post/>}/>
+          <Route exact path="/post" element={<Posts/>}/>
         </Routes>
       </div>
     </>

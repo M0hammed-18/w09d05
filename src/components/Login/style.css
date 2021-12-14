@@ -1,5 +1,5 @@
 .sectionbox{
-    background-color: rgb(104, 104, 94);
+    
     display:flex;
     flex-direction: column;
     width: 30%;
@@ -7,7 +7,7 @@
     
 }
 .singUpPage{
-    background-color: rgb(36, 44, 19);
+    background-color: rgb(216, 224, 197);
     width: 100%;
     height: 39rem;
 }
@@ -23,3 +23,32 @@
     font-size: 2rem;
     color: darkgrey;
 }
+section{
+    background-color: rgb(170, 162, 162);
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    width: 100%;
+    height: 18rem;
+}
+h3{
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: ghostwhite;
+    font-size: 2rem;
+}
+#bt{
+    width: 30%;
+    height: 2rem;
+}
+p{
+    font-family:sans-serif;
+    color: ghostwhite;
+    font-size: 1rem;  
+}
+/* button{
+    color: blue;
+    background-color: brown;
+    width: 20%;
+    height: 2rem;
+    border-radius: 50%;
+} */

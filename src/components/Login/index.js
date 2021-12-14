@@ -3,11 +3,11 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {login} from "./../../reducers/login"
+import { login1 } from "./../../reducers/login";
 import "./style.css";
 import Nav from "../Nav";
 
-const popupTools = require("popup-tools");
+// const popupTools = require("popup-tools");
 const Login = () => {
   // eslint-disable-next-line
   const navigate = useNavigate();
@@ -18,34 +18,38 @@ const Login = () => {
   const [local, setLocal] = useState("");
   const [message, setMessage] = useState("");
 
-  // const state = useSelector((state) => {
-  //   return {
-  //     token: state.Login.token,
-  //   };
-  // });
+  const state = useSelector((state) => {
+    // console.log("dd",state.signIn.token);
+    return {
+      token: state.signIn.token,
+    };
+  });
+  console.log(state);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setLocal(token);
+  }, []);
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   setLocal(token);
-  // }, []);
-
-  const login = async (e) => {
-    setMessage('')
+  const login = async () => {
+    setMessage("");
     try {
-      e.preventDefault();
-      const result = await axios.post(`${BASE_URL}/loginn`, {
+      // e.preventDefault();
+      const result = await axios.post(`http://localhost:4000/loginn`, {
         email,
         password,
       });
-      console.log(result);
-      dispatch( login({ role: result.data.result.role, token: result.data.token }));
-      navigate("/");
+      const data = {};
+      console.log("ll", result);
+      dispatch(
+        login1({ role: result.data.result.role, token: result.data.token })
+      );
+      navigate("/post");
     } catch (err) {
       console.log(err, "what");
       setMessage(err.response.data.message);
     }
 
-    navigate("/post");
+    // navigate("/post");
 
     // const googlelogin = () => {
     //   popupTools.popup(
@@ -71,14 +75,13 @@ const Login = () => {
     <>
       <Nav />
       <div className="singUpPage">
-        {!local ? (
+        {!state.token ? (
           <div className="sectionbox">
-            <p>You already loggedin, you don't need to login</p>
-
-            <button onClick={() => navigate("/")}>home</button>
-            <section>
-              <h5>Login </h5>
+            <section >
+              <div className="sec">
+              <h3>Login </h3>
               {message ? <div className="message">{message}</div> : ""}
+
               <input
                 id="inputbox"
                 type="email"
@@ -96,15 +99,19 @@ const Login = () => {
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
-              />
-               {/* <button
+              /></div>
+              {/* <button
               type="button"
               className="login-with-google-btn"
               onClick={googlelogin}
             >
               Or Login with Google
             </button> */}
-              <button onClick={login}>Login</button>
+              <button id="bt" onClick={login}>Login</button>
+
+              {/* <p>You already loggedin, you don't need to login</p>
+
+              <button id="bt"onClick={() => navigate("/")}>home</button> */}
             </section>
           </div>
         ) : (
