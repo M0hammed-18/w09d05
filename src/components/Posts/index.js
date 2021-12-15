@@ -1,15 +1,16 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import "./style.css";
 import { useNavigate } from "react-router-dom";
+import { logout1 } from "../../reducers/login";
 
 const Post = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
   const [task, setTask] = useState([]);
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const state = useSelector((state) => {
         return state;
       });
@@ -94,15 +95,39 @@ const Post = () => {
         console.log(error);
       }
     };
+  
+    const addlike = async postId => {
+      try {
+        const res = await axios.post(
+          `${BASE_URL}/addLike`,
+          {
+            postId: postId,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${state.signIn.token}`,
+            },
+          }
+        );
+        taskshow();
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
     const logout = () => {
+      dispatch(logout1({role:"",token:""}))
       localStorage.clear();
       navigate("/");
     };
  
 
   return (
-    <><h2>Post</h2>
+
+    <><button id="logbut"
+    onClick={logout}>Exit</button>
+    <h2>Post</h2>
+    
     <div className="posthome">
       
       <input
@@ -120,12 +145,14 @@ const Post = () => {
         placeholder="add Post Img"
       />{" "}
       <button onClick={addtask}>add</button>
+
+      
       <div className="post">
       {task.map((e) => (
         <div className="listphoto">
         <ul>
           <li>
-            {e.desc}
+           <h3> {e.desc} </h3>
             <input 
         onChange={(e) => {
           setNewtask(e.target.value);
@@ -150,6 +177,8 @@ const Post = () => {
                   <button className="addBTN" onClick={()=> addcomment(e._id)}>
                     add
                   </button>
+                  <button onClick={() => addlike(e._id)}>Like </button>
+                  <h3>{e.like.length}</h3>
             <button
               onClick={() => {
                 del(e._id);
@@ -157,15 +186,16 @@ const Post = () => {
             >
               delete
             </button>
+            
           </li>
           {console.log()}{" "}
         </ul>
-        {/* <button 
-         onClick={logout}{()=>{
+        
 
-         }} */}
+         
         </div>
       ))}
+      
       </div>
     </div>
     </>

@@ -14,8 +14,8 @@ const instialState = {
         return { role, token };
   
       case "LOGOUT":
-        localStorage.removeItem("token", token);
-        localStorage.removeItem("role", role);
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
         return {role: "", token:""};
   
       default:
@@ -36,7 +36,7 @@ const instialState = {
     };
   };
 
-  export const logout = (data) => {
+  export const logout1 = (data) => {
     return {
       type: "LOGOUT",
       payload: data, 

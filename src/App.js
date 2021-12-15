@@ -5,6 +5,7 @@ import Nav from "./components/Nav";
 import Login from "./components/Login";
 import SingUp from "./components/SingUp";
 import Posts from "./components/Posts";
+import ResetPassword from "./components/ResetPassword";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="nav" element={<Nav />} />
           <Route exact path="/login" element={<Login />} />
+          <Route exact path="/reset_password" element={<ResetPassword />} />
           <Route exact path="/post" element={<Posts/>}/>
         </Routes>
       </div>
